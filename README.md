@@ -84,7 +84,28 @@ El sistema requiere iniciar sesión para acceder a cualquier módulo.
 
 ## Documentación de la API (Swagger)
 
-La API está documentada con **Scribe**, que expone una interfaz *Swagger UI*, un especificación **OpenAPI 3.0.3** y una colección de **Postman**:
+La API está documentada con **Scribe**, que expone una interfaz *Swagger UI*, un especificación **OpenAPI 3.0.3** y una colección de **Postman**.
+
+### Documentación en la carpeta `docs/`
+
+La documentación portable (especificación OpenAPI y colección Postman) vive en la
+carpeta **`docs/`**, separada del código fuente:
+
+```
+docs/
+├── README.md                            # índice de la documentación
+├── api/
+│   ├── openapi.yaml                     # Especificación OpenAPI 3.0.3
+│   └── openapi.json                     # Misma especificación en JSON
+└── postman/
+    └── bufete_abogados.postman_collection.json   # Colección Postman v2.1
+```
+
+La colección de Postman incluye **todas las peticiones de la API** (login, register,
+logout y CRUD de clientes, abogados y casos). Para importarla: **Postman → Import →
+Upload Files** y selecciona `docs/postman/bufete_abogados.postman_collection.json`.
+
+### Ver la documentación interactiva
 
 | Recurso | URL                        |
 |---------|----------------------------|

@@ -1,0 +1,886 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8080"
+        }
+    ],
+    "info": {
+        "name": "Bufete de Abogados API Documentation",
+        "_postman_id": "1175efdc-3954-4d8c-98c0-514fc62675c2",
+        "description": "API REST del sistema del bufete de abogados: autenticaci\u00f3n con tokens Bearer (Laravel Sanctum) y operaciones CRUD sobre clientes, abogados y casos.",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Abogados",
+            "description": "",
+            "item": [
+                {
+                    "name": "Lista todos los abogados ordenados alfab\u00e9ticamente.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/abogados",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/abogados"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"cedula\": \"1234567890\",\n      \"nombre\": \"Carlos\",\n      \"apellido\": \"Ruiz\",\n      \"nombre_completo\": \"Carlos Ruiz\",\n      \"email\": \"carlos@example.com\",\n      \"telefono\": \"3101234567\",\n      \"especialidad\": \"Derecho Civil\"\n    }\n  ]\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Crea un nuevo abogado.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/abogados",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/abogados"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"cedula\":\"9876543210\",\"nombre\":\"Carlos\",\"apellido\":\"Ruiz\",\"email\":\"carlos@example.com\",\"telefono\":\"3101234567\",\"especialidad\":\"Derecho Civil\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"data\": {\n    \"id\": 2,\n    \"cedula\": \"9876543210\",\n    \"nombre\": \"Carlos\",\n    \"apellido\": \"Ruiz\",\n    \"nombre_completo\": \"Carlos Ruiz\",\n    \"email\": \"carlos@example.com\",\n    \"telefono\": \"3101234567\",\n    \"especialidad\": \"Derecho Civil\"\n  }\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Devuelve la informaci\u00f3n de un abogado.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/abogados\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/abogados\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the abogado."
+                                },
+                                {
+                                    "id": "abogado",
+                                    "key": "abogado",
+                                    "value": 1,
+                                    "description": "ID del abogado."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": {\n    \"id\": 1,\n    \"cedula\": \"1234567890\",\n    \"nombre\": \"Carlos\",\n    \"apellido\": \"Ruiz\",\n    \"nombre_completo\": \"Carlos Ruiz\",\n    \"email\": \"carlos@example.com\",\n    \"telefono\": \"3101234567\",\n    \"especialidad\": \"Derecho Civil\"\n  }\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Actualiza los datos de un abogado.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/abogados\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/abogados\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the abogado."
+                                },
+                                {
+                                    "id": "abogado",
+                                    "key": "abogado",
+                                    "value": 1,
+                                    "description": "ID del abogado."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"cedula\":\"9876543210\",\"nombre\":\"Carlos\",\"apellido\":\"Ruiz\",\"email\":\"carlos@example.com\",\"telefono\":\"3101234567\",\"especialidad\":\"Derecho Civil\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Elimina un abogado de forma l\u00f3gica (soft delete).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/abogados\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/abogados\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the abogado."
+                                },
+                                {
+                                    "id": "abogado",
+                                    "key": "abogado",
+                                    "value": 1,
+                                    "description": "ID del abogado."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"message\": \"Abogado eliminado.\"\n}",
+                            "name": "success"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Autenticaci\u00f3n",
+            "description": "",
+            "item": [
+                {
+                    "name": "Autentica al usuario y devuelve un token Bearer de acceso.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"demo@bufete.com\",\"password\":\"password\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"message\": \"Autenticaci\u00f3n exitosa.\",\n  \"token\": \"1|xxxxxxxxxxxxxxxxxxxx\",\n  \"token_type\": \"Bearer\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Demo Bufete\",\n    \"email\": \"demo@bufete.com\"\n  }\n}",
+                            "name": "Credenciales v\u00e1lidas"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"message\": \"Credenciales inv\u00e1lidas.\"\n}",
+                            "name": "Credenciales inv\u00e1lidas"
+                        }
+                    ]
+                },
+                {
+                    "name": "Registra un nuevo usuario y devuelve un token Bearer de acceso.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Juan P\u00e9rez\",\"email\":\"juan@example.com\",\"password\":\"secret123\",\"password_confirmation\":\"secret123\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"message\": \"Registro exitoso.\",\n  \"token\": \"1|xxxxxxxxxxxxxxxxxxxx\",\n  \"token_type\": \"Bearer\",\n  \"user\": {\n    \"id\": 2,\n    \"name\": \"Juan P\u00e9rez\",\n    \"email\": \"juan@example.com\"\n  }\n}",
+                            "name": "Registro exitoso"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"message\": \"The email has already been taken.\"\n}",
+                            "name": "Datos inv\u00e1lidos"
+                        }
+                    ]
+                },
+                {
+                    "name": "Cierra la sesi\u00f3n revocando el token Bearer actual.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"message\": \"Sesi\u00f3n cerrada correctamente.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Casos",
+            "description": "",
+            "item": [
+                {
+                    "name": "Lista todos los casos, incluyendo cliente y abogados.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/casos",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/casos"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"numero_expediente\": \"EXP-0001-2024\",\n      \"estado\": {\n        \"value\": \"en_tramite\",\n        \"label\": \"En tr\u00e1mite\"\n      },\n      \"fecha_inicio\": \"2024-01-15\",\n      \"fecha_finalizacion\": null,\n      \"descripcion\": \"Demanda laboral\",\n      \"cliente\": {\n        \"id\": 1,\n        \"cedula\": \"1234567890\",\n        \"nombre\": \"Ana\",\n        \"apellido\": \"G\u00f3mez\",\n        \"nombre_completo\": \"Ana G\u00f3mez\",\n        \"email\": \"ana@example.com\",\n        \"telefono\": \"3001234567\",\n        \"direccion\": \"Calle 1 #2-3\"\n      },\n      \"abogados\": []\n    }\n  ]\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Crea un nuevo caso y asigna los abogados indicados.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/casos",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/casos"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"numero_expediente\":\"EXP-0002-2024\",\"cliente_id\":1,\"fecha_inicio\":\"2024-03-01\",\"fecha_finalizacion\":\"2024-09-01\",\"estado\":\"en_tramite\",\"descripcion\":\"Contrato incumplido\",\"abogados\":\"[1, 2]\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"data\": {\n    \"id\": 2,\n    \"numero_expediente\": \"EXP-0002-2024\",\n    \"estado\": {\n      \"value\": \"en_tramite\",\n      \"label\": \"En tr\u00e1mite\"\n    },\n    \"fecha_inicio\": \"2024-03-01\",\n    \"fecha_finalizacion\": null,\n    \"descripcion\": \"Contrato incumplido\",\n    \"cliente\": {\n      \"id\": 1,\n      \"cedula\": \"1234567890\",\n      \"nombre\": \"Ana\",\n      \"apellido\": \"G\u00f3mez\",\n      \"nombre_completo\": \"Ana G\u00f3mez\",\n      \"email\": \"ana@example.com\",\n      \"telefono\": \"3001234567\",\n      \"direccion\": \"Calle 1 #2-3\"\n    },\n    \"abogados\": [\n      {\n        \"id\": 1,\n        \"cedula\": \"1234567890\",\n        \"nombre\": \"Carlos\",\n        \"apellido\": \"Ruiz\",\n        \"nombre_completo\": \"Carlos Ruiz\",\n        \"email\": \"carlos@example.com\",\n        \"telefono\": \"3101234567\",\n        \"especialidad\": \"Derecho Civil\"\n      }\n    ]\n  }\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Devuelve toda la informaci\u00f3n de un caso, incluyendo cliente y abogados.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/casos\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/casos\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the caso."
+                                },
+                                {
+                                    "id": "caso",
+                                    "key": "caso",
+                                    "value": 1,
+                                    "description": "ID del caso."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": {\n    \"id\": 1,\n    \"numero_expediente\": \"EXP-0001-2024\",\n    \"estado\": {\n      \"value\": \"en_tramite\",\n      \"label\": \"En tr\u00e1mite\"\n    },\n    \"fecha_inicio\": \"2024-01-15\",\n    \"fecha_finalizacion\": null,\n    \"descripcion\": \"Demanda laboral\",\n    \"cliente\": {\n      \"id\": 1,\n      \"cedula\": \"1234567890\",\n      \"nombre\": \"Ana\",\n      \"apellido\": \"G\u00f3mez\",\n      \"nombre_completo\": \"Ana G\u00f3mez\",\n      \"email\": \"ana@example.com\",\n      \"telefono\": \"3001234567\",\n      \"direccion\": \"Calle 1 #2-3\"\n    },\n    \"abogados\": [\n      {\n        \"id\": 1,\n        \"cedula\": \"1234567890\",\n        \"nombre\": \"Carlos\",\n        \"apellido\": \"Ruiz\",\n        \"nombre_completo\": \"Carlos Ruiz\",\n        \"email\": \"carlos@example.com\",\n        \"telefono\": \"3101234567\",\n        \"especialidad\": \"Derecho Civil\"\n      }\n    ],\n    \"created_at\": \"2024-01-15T10:00:00+00:00\",\n    \"updated_at\": \"2024-01-15T10:00:00+00:00\"\n  }\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Actualiza los datos de un caso y sus abogados asignados.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/casos\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/casos\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the caso."
+                                },
+                                {
+                                    "id": "caso",
+                                    "key": "caso",
+                                    "value": 1,
+                                    "description": "ID del caso."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"numero_expediente\":\"EXP-0002-2024\",\"cliente_id\":1,\"fecha_inicio\":\"2024-03-01\",\"fecha_finalizacion\":\"2024-09-01\",\"estado\":\"en_tramite\",\"descripcion\":\"Contrato incumplido\",\"abogados\":\"[1, 2]\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Elimina un caso de forma l\u00f3gica (soft delete).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/casos\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/casos\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the caso."
+                                },
+                                {
+                                    "id": "caso",
+                                    "key": "caso",
+                                    "value": 1,
+                                    "description": "ID del caso."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"message\": \"Caso eliminado.\"\n}",
+                            "name": "success"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Clientes",
+            "description": "",
+            "item": [
+                {
+                    "name": "Lista todos los clientes ordenados alfab\u00e9ticamente.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/clientes",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/clientes"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"cedula\": \"1234567890\",\n      \"nombre\": \"Ana\",\n      \"apellido\": \"G\u00f3mez\",\n      \"nombre_completo\": \"Ana G\u00f3mez\",\n      \"email\": \"ana@example.com\",\n      \"telefono\": \"3001234567\",\n      \"direccion\": \"Calle 1 #2-3\"\n    }\n  ]\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Crea un nuevo cliente.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/clientes",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/clientes"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"cedula\":\"9876543210\",\"nombre\":\"Ana\",\"apellido\":\"G\u00f3mez\",\"email\":\"ana@example.com\",\"telefono\":\"3001234567\",\"direccion\":\"Calle 1 #2-3\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"data\": {\n    \"id\": 2,\n    \"cedula\": \"9876543210\",\n    \"nombre\": \"Ana\",\n    \"apellido\": \"G\u00f3mez\",\n    \"nombre_completo\": \"Ana G\u00f3mez\",\n    \"email\": \"ana@example.com\",\n    \"telefono\": \"3001234567\",\n    \"direccion\": \"Calle 1 #2-3\"\n  }\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Devuelve la informaci\u00f3n de un cliente.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/clientes\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/clientes\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the cliente."
+                                },
+                                {
+                                    "id": "cliente",
+                                    "key": "cliente",
+                                    "value": 1,
+                                    "description": "ID del cliente."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": {\n    \"id\": 1,\n    \"cedula\": \"1234567890\",\n    \"nombre\": \"Ana\",\n    \"apellido\": \"G\u00f3mez\",\n    \"nombre_completo\": \"Ana G\u00f3mez\",\n    \"email\": \"ana@example.com\",\n    \"telefono\": \"3001234567\",\n    \"direccion\": \"Calle 1 #2-3\"\n  }\n}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Actualiza los datos de un cliente.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/clientes\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/clientes\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the cliente."
+                                },
+                                {
+                                    "id": "cliente",
+                                    "key": "cliente",
+                                    "value": 1,
+                                    "description": "ID del cliente."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"cedula\":\"9876543210\",\"nombre\":\"Ana\",\"apellido\":\"G\u00f3mez\",\"email\":\"ana@example.com\",\"telefono\":\"3001234567\",\"direccion\":\"Calle 1 #2-3\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Elimina un cliente de forma l\u00f3gica (soft delete).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/clientes\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/clientes\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the cliente."
+                                },
+                                {
+                                    "id": "cliente",
+                                    "key": "cliente",
+                                    "value": 1,
+                                    "description": "ID del cliente."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"message\": \"Cliente eliminado.\"\n}",
+                            "name": "success"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "GET api\/user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "Authorization",
+                "type": "string"
+            }
+        ]
+    }
+}
