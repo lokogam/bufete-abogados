@@ -7,32 +7,21 @@ Documentación oficial y recursos de consumo de la **API del bufete de abogados*
 ```
 docs/
 ├── README.md                            # este índice
-├── api/
-│   ├── openapi.yaml                     # Especificación OpenAPI 3.0.3 (Swagger)
-│   └── openapi.json                     # Misma especificación en JSON
 └── postman/
     └── bufete_abogados.postman_collection.json   # Colección Postman v2.1
 ```
 
-## Swagger / OpenAPI
+## Documentación Swagger
 
-La especificación completa de la API está en `docs/api/` en dos formatos (YAML y JSON).
+La API se documenta con **Swagger** a través de la interfaz interactiva que sirve la
+propia aplicación en **`http://localhost:8080/docs`** (Swagger UI con *Try It Out*).
+
 Define los 15 endpoints del sistema agrupados en:
 
 - **Autenticación** — `login`, `register`, `logout`
 - **Clientes** — CRUD (`clientes`)
 - **Abogados** — CRUD (`abogados`)
 - **Casos** — CRUD (`casos`), incluye asignación de abogados
-
-### Ver la documentación interactiva
-
-La aplicación sirve una interfaz Swagger UI navegable (con *Try It Out*):
-
-| Recurso        | URL                                   |
-|----------------|---------------------------------------|
-| Swagger UI     | `http://localhost:8080/docs`          |
-| OpenAPI        | `http://localhost:8080/docs.openapi`  |
-| Postman        | `http://localhost:8080/docs.postman`  |
 
 Para regenerar la documentación tras cambiar la API:
 
