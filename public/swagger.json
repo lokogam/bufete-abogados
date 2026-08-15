@@ -2,7 +2,7 @@
     "openapi": "3.0.3",
     "info": {
         "title": "Bufete de Abogados API Documentation",
-        "description": "API REST del sistema del bufete de abogados: autenticación con tokens Bearer (Laravel Sanctum) y operaciones CRUD sobre clientes, abogados y casos.",
+        "description": "API REST del sistema del bufete de abogados: autenticación con tokens Bearer (Laravel Sanctum) y operaciones CRUD sobre clientes, abogados y casos.\n\nEsta documentación cubre SOLO la API REST, pensada para consumidores externos (Postman, otras aplicaciones). La interfaz web (HTML para navegador) tiene su propio login/registro por sesión en /login, /register y /logout, y no se incluye aquí.",
         "version": "1.0.0"
     },
     "servers": [
@@ -12,24 +12,20 @@
     ],
     "tags": [
         {
-            "name": "Abogados",
-            "description": ""
-        },
-        {
             "name": "Autenticación",
-            "description": ""
-        },
-        {
-            "name": "Casos",
-            "description": ""
+            "description": "Registro, inicio y cierre de sesión de la API. Devuelve y consume tokens Bearer (Laravel Sanctum)."
         },
         {
             "name": "Clientes",
-            "description": ""
+            "description": "Operaciones CRUD sobre clientes de la API REST, autenticadas con token Bearer."
         },
         {
-            "name": "Endpoints",
-            "description": ""
+            "name": "Abogados",
+            "description": "Operaciones CRUD sobre abogados de la API REST, autenticadas con token Bearer."
+        },
+        {
+            "name": "Casos",
+            "description": "Operaciones CRUD sobre casos (expedientes) y sus abogados asignados, autenticadas con token Bearer."
         }
     ],
     "components": {
@@ -1904,9 +1900,9 @@
         },
         "/api/user": {
             "get": {
-                "summary": "",
+                "summary": "Devuelve el usuario autenticado con el token Bearer actual.",
                 "operationId": "getApiUser",
-                "description": "",
+                "description": "Devuelve los datos del usuario correspondiente al token Bearer usado en la petición.",
                 "parameters": [],
                 "responses": {
                     "401": {
@@ -1930,7 +1926,7 @@
                     }
                 },
                 "tags": [
-                    "Endpoints"
+                    "Autenticación"
                 ]
             }
         }
