@@ -1,6 +1,6 @@
 # Bufete de Abogados — Prueba técnica
 
-Aplicación Laravel para la gestión de los casos de un bufete de abogados: clientes, expedientes, abogados asignados, API autenticada con Bearer Token y exportación a Excel con una hoja por abogado. El proyecto corre íntegramente sobre Docker.
+Aplicación Laravel para la gestión de los casos de un bufete de abogados: clientes, expedientes, abogados asignados, **CRUD completo de las tres entidades** (web + API), autenticación con **login/registro/logout** (sesión web y tokens Bearer), **documentación de la API con Swagger (Scribe/OpenAPI)** y exportación a Excel con una hoja por abogado. El proyecto corre íntegramente sobre Docker.
 
 ## Tecnologías
 
@@ -8,6 +8,7 @@ Aplicación Laravel para la gestión de los casos de un bufete de abogados: clie
 - **MySQL 8.4** (LTS)
 - **Blade + Tailwind CSS** (frontend)
 - **Laravel Sanctum** (autenticación API con tokens)
+- **Scribe** (documentación de la API: Swagger UI + OpenAPI 3.0 + Postman)
 - **Maatwebsite/Laravel-Excel** (generación de Excel)
 - **Docker Compose** (app + nginx + mysql)
 
@@ -71,6 +72,32 @@ La aplicación queda disponible en **http://localhost:8080**.
 | Email    | `demo@bufete.com`|
 | Password | `password`       |
 
+## Autenticación (interfaz web)
+
+El sistema requiere iniciar sesión para acceder a cualquier módulo.
+
+| Ruta       | Método | Descripción                      |
+|------------|--------|----------------------------------|
+| `/register`| GET/POST | Registro de un nuevo usuario   |
+| `/login`   | GET/POST | Inicio de sesión               |
+| `/logout`  | POST    | Cierre de sesión               |
+
+## Documentación de la API (Swagger)
+
+La API está documentada con **Scribe**, que expone una interfaz *Swagger UI*, un especificación **OpenAPI 3.0.3** y una colección de **Postman**:
+
+| Recurso | URL                        |
+|---------|----------------------------|
+| Swagger UI | `http://localhost:8080/docs`          |
+| OpenAPI    | `http://localhost:8080/docs.openapi`  |
+| Postman    | `http://localhost:8080/docs.postman`  |
+
+Para regenerar la documentación tras añadir o modificar endpoints:
+
+```bash
+docker compose exec app php artisan scribe:generate
+```
+
 ## API
 
 ### Autenticación (Bearer Token)
@@ -92,6 +119,28 @@ Respuesta:
   "user": { "id": 1, "name": "Usuario Demo", "email": "demo@bufete.com" }
 }
 ```
+
+También se puede registrar un nuevo usuario (`POST /api/register`), que devuelve un token listo para usar, y cerrar sesión (`POST /api/logout`), que revoca el token actual.
+
+### Endpoints disponibles (todos requieren `Authorization: Bearer <token>`)
+
+| Método | Ruta                     | Descripción                          |
+|--------|--------------------------|--------------------------------------|
+| GET    | `/api/clientes`          | Lista clientes                       |
+| POST   | `/api/clientes`          | Crea un cliente                      |
+| GET    | `/api/clientes/{id}`     | Muestra un cliente                   |
+| PUT    | `/api/clientes/{id}`     | Actualiza un cliente                 |
+| DELETE | `/api/clientes/{id}`     | Elimina un cliente (soft delete)     |
+| GET    | `/api/abogados`          | Lista abogados                       |
+| POST   | `/api/abogados`          | Crea un abogado                      |
+| GET    | `/api/abogados/{id}`     | Muestra un abogado                   |
+| PUT    | `/api/abogados/{id}`     | Actualiza un abogado                 |
+| DELETE | `/api/abogados/{id}`     | Elimina un abogado (soft delete)     |
+| GET    | `/api/casos`             | Lista casos                          |
+| POST   | `/api/casos`             | Crea un caso (acepta `abogados[]`)   |
+| GET    | `/api/casos/{id}`        | Información completa del caso        |
+| PUT    | `/api/casos/{id}`        | Actualiza un caso y sus abogados     |
+| DELETE | `/api/casos/{id}`        | Elimina un caso (soft delete)        |
 
 ### Obtener toda la información de un caso por su id
 
@@ -180,7 +229,7 @@ SELECT * FROM casos ORDER BY id ASC LIMIT 5;
 docker compose exec app php artisan test
 ```
 
-Cubre: autenticación (login, 401, token), recurso de caso (200/401/404), soft delete y generación del Excel con una hoja por abogado.
+Cubre: autenticación web (login, registro, logout, rutas protegidas) y de la API (login, register, logout, 401), CRUD completo de clientes/abogados/casos en web y API (incluyendo validaciones y soft delete), recurso de caso (200/401/404) y generación del Excel con una hoja por abogado.
 
 ## Estilo de código
 
@@ -198,12 +247,14 @@ app/
 │   ├── CasosPorAbogadoExport.php               # libro multi-hoja
 │   └── Sheets/CasosDeAbogadoSheet.php          # hoja por abogado
 ├── Http/
-│   ├── Controllers/Api/                        # AuthController, CasoController
-│   ├── Controllers/                            # Dashboard, CasoWeb, Export
-│   ├── Requests/LoginRequest.php               # validación de login
+│   ├── Controllers/Auth/                       # login/registro/logout web
+│   ├── Controllers/Api/                        # Auth, Cliente, Abogado, Caso
+│   ├── Controllers/                            # Dashboard, Cliente, Abogado, CasoWeb, Export
+│   ├── Requests/                               # validaciones de formularios
 │   └── Resources/                              # CasoResource, ClienteResource, AbogadoResource
 ├── Models/                                     # Cliente, Abogado, Caso, CasoAbogado
-└── Services/AuthService.php                    # lógica de emisión de tokens
+└── Services/                                   # AuthService, ClienteService, AbogadoService, CasoService
+config/scribe.php                               # configuración de Scribe (Swagger)
 database/
 ├── migrations/                                 # esquema (clientes, abogados, casos, caso_abogado)
 ├── seeders/                                    # datos de demostración
@@ -218,6 +269,8 @@ docker-compose.yml                              # app + nginx + mysql
 | Ruta            | Descripción                          |
 |-----------------|--------------------------------------|
 | `/`             | Dashboard con indicadores            |
-| `/casos`        | Listado de casos (orden ascendente)  |
+| `/clientes`     | CRUD de clientes                     |
+| `/abogados`     | CRUD de abogados                     |
+| `/casos`        | CRUD de casos (orden ascendente)     |
 | `/casos/{id}`   | Detalle del caso                     |
 | `/exportar-excel` | Descarga el libro Excel            |

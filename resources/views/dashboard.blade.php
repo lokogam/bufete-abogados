@@ -7,27 +7,28 @@
     <p class="mt-1 text-sm text-gray-500">Resumen general del bufete.</p>
 
     <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-lg bg-white p-5 shadow-sm">
-            <p class="text-sm text-gray-500">Casos en trámite</p>
-            <p class="mt-1 text-3xl font-bold text-blue-600">{{ $casosEnTramite }}</p>
-        </div>
-        <div class="rounded-lg bg-white p-5 shadow-sm">
-            <p class="text-sm text-gray-500">Casos archivados</p>
-            <p class="mt-1 text-3xl font-bold text-gray-700">{{ $casosArchivados }}</p>
-        </div>
-        <div class="rounded-lg bg-white p-5 shadow-sm">
-            <p class="text-sm text-gray-500">Clientes</p>
-            <p class="mt-1 text-3xl font-bold text-emerald-600">{{ $totalClientes }}</p>
-        </div>
-        <div class="rounded-lg bg-white p-5 shadow-sm">
-            <p class="text-sm text-gray-500">Abogados</p>
-            <p class="mt-1 text-3xl font-bold text-purple-600">{{ $totalAbogados }}</p>
-        </div>
+        <a href="{{ route('casos.index') }}" class="stat-card blue">
+            <p class="stat-label">Casos en trámite</p>
+            <p class="stat-value text-primary-600">{{ $casosEnTramite }}</p>
+        </a>
+        <a href="{{ route('casos.index') }}" class="stat-card gray">
+            <p class="stat-label">Casos archivados</p>
+            <p class="stat-value text-gray-700">{{ $casosArchivados }}</p>
+        </a>
+        <a href="{{ route('clientes.index') }}" class="stat-card green">
+            <p class="stat-label">Clientes</p>
+            <p class="stat-value text-success-600">{{ $totalClientes }}</p>
+        </a>
+        <a href="{{ route('abogados.index') }}" class="stat-card purple">
+            <p class="stat-label">Abogados</p>
+            <p class="stat-value text-purple-600">{{ $totalAbogados }}</p>
+        </a>
     </div>
 
-    <div class="mt-8">
-        <a href="{{ route('casos.index') }}" class="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
-            Ver todos los casos →
-        </a>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href="{{ route('casos.index') }}" class="btn-primary">Ver casos</a>
+        <a href="{{ route('clientes.index') }}" class="btn-secondary">Ver clientes</a>
+        <a href="{{ route('abogados.index') }}" class="btn-secondary">Ver abogados</a>
+        <a href="{{ route('casos.export') }}" class="btn-ghost">Exportar Excel</a>
     </div>
 @endsection

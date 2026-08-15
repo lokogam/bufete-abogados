@@ -37,4 +37,31 @@ final class AuthService
             'user' => $user,
         ];
     }
+
+    /**
+     * Crea un usuario y emite un token de acceso personal.
+     *
+     * @param  array{name: string, email: string, password: string}  $data
+     * @return array{token: string, user: User}
+     */
+    public function register(array $data): array
+    {
+        /** @var User $user */
+        $user = User::create($data);
+
+        $token = $user->createToken('api-access')->plainTextToken;
+
+        return [
+            'token' => $token,
+            'user' => $user,
+        ];
+    }
+
+    /**
+     * Revoca el token de acceso actual del usuario.
+     */
+    public function revokeCurrentToken(User $user): void
+    {
+        $user->currentAccessToken()->delete();
+    }
 }

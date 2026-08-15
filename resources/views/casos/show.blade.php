@@ -10,9 +10,16 @@
             <h1 class="text-2xl font-bold">{{ $caso->numero_expediente }}</h1>
             <p class="mt-1 text-sm text-gray-500">{{ $caso->descripcion }}</p>
         </div>
-        <span class="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700">
-            {{ $caso->estado->label() }}
-        </span>
+        <div class="flex items-center gap-3">
+            <span class="badge-blue">{{ $caso->estado->label() }}</span>
+            <a href="{{ route('casos.edit', $caso) }}" class="btn-secondary btn-sm">Editar</a>
+            <form method="POST" action="{{ route('casos.destroy', $caso) }}"
+                onsubmit="return confirm('¿Eliminar este caso? Esta acción es reversible.');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-sm bg-danger-600 text-white hover:bg-danger-700">Eliminar</button>
+            </form>
+        </div>
     </div>
 
     <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">

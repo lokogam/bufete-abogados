@@ -7,6 +7,7 @@ namespace App\Http\Resources;
 use App\Models\Abogado;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 /**
  * @mixin Abogado
@@ -27,7 +28,10 @@ class AbogadoResource extends JsonResource
             'email' => $this->email,
             'telefono' => $this->telefono,
             'especialidad' => $this->especialidad,
-            'fecha_asignacion' => $this->whenPivotLoaded('caso_abogado', fn () => $this->pivot?->fecha_asignacion?->toDateString()),
+            'fecha_asignacion' => $this->whenPivotLoaded(
+                'caso_abogado',
+                fn () => $this->pivot?->fecha_asignacion ? Carbon::parse($this->pivot->fecha_asignacion)->toDateString() : null,
+            ),
         ];
     }
 }

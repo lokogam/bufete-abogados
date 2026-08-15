@@ -97,4 +97,90 @@ class CasoApiTest extends TestCase
             ->getJson("/api/casos/{$caso->id}")
             ->assertNotFound();
     }
+
+    public function test_lista_casos_con_token(): void
+    {
+        $user = User::factory()->create();
+        Caso::factory()->count(3)->create();
+
+        $this->actingAs($user, 'sanctum')
+            ->getJson('/api/casos')
+            ->assertOk()
+            ->assertJsonCount(3, 'data');
+    }
+
+    public function test_crea_un_caso_con_abogados_asignados(): void
+    {
+        $user = User::factory()->create();
+        $cliente = Cliente::factory()->create();
+        $abogado = Abogado::factory()->create();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson('/api/casos', [
+                'numero_expediente' => 'EXP-2025-0100',
+                'cliente_id' => $cliente->id,
+                'fecha_inicio' => '2025-01-15',
+                'estado' => 'en_tramite',
+                'descripcion' => 'Demanda laboral',
+                'abogados' => [$abogado->id],
+            ]);
+
+        $response->assertCreated()
+            ->assertJsonPath('data.numero_expediente', 'EXP-2025-0100')
+            ->assertJsonPath('data.estado.value', 'en_tramite')
+            ->assertJsonCount(1, 'data.abogados');
+
+        $this->assertDatabaseCount('caso_abogado', 1);
+    }
+
+    public function test_crear_caso_con_estado_invalido_devuelve_422(): void
+    {
+        $user = User::factory()->create();
+        $cliente = Cliente::factory()->create();
+
+        $this->actingAs($user, 'sanctum')
+            ->postJson('/api/casos', [
+                'numero_expediente' => 'EXP-2025-0101',
+                'cliente_id' => $cliente->id,
+                'fecha_inicio' => '2025-01-15',
+                'estado' => 'estado_invalido',
+            ])->assertUnprocessable()->assertJsonValidationErrors('estado');
+    }
+
+    public function test_actualiza_un_caso_y_sus_abogados(): void
+    {
+        $user = User::factory()->create();
+        $cliente = Cliente::factory()->create();
+        $abogado = Abogado::factory()->create();
+        $caso = Caso::factory()->create(['cliente_id' => $cliente->id]);
+        $caso->abogados()->attach($abogado->id);
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->putJson("/api/casos/{$caso->id}", [
+                'numero_expediente' => $caso->numero_expediente,
+                'cliente_id' => $cliente->id,
+                'fecha_inicio' => $caso->fecha_inicio->format('Y-m-d'),
+                'estado' => 'archivado',
+                'fecha_finalizacion' => $caso->fecha_inicio->copy()->addMonths(6)->format('Y-m-d'),
+                'abogados' => [],
+            ]);
+
+        $response->assertOk()
+            ->assertJsonPath('data.estado.value', 'archivado')
+            ->assertJsonCount(0, 'data.abogados');
+
+        $this->assertDatabaseCount('caso_abogado', 0);
+    }
+
+    public function test_elimina_un_caso_de_forma_logica(): void
+    {
+        $user = User::factory()->create();
+        $caso = Caso::factory()->create();
+
+        $this->actingAs($user, 'sanctum')
+            ->deleteJson("/api/casos/{$caso->id}")
+            ->assertOk();
+
+        $this->assertSoftDeleted('casos', ['id' => $caso->id]);
+    }
 }
