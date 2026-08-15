@@ -1,58 +1,223 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Bufete de Abogados — Prueba técnica
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicación Laravel para la gestión de los casos de un bufete de abogados: clientes, expedientes, abogados asignados, API autenticada con Bearer Token y exportación a Excel con una hoja por abogado. El proyecto corre íntegramente sobre Docker.
 
-## About Laravel
+## Tecnologías
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Laravel 13** (última versión estable) + **PHP 8.4**
+- **MySQL 8.4** (LTS)
+- **Blade + Tailwind CSS** (frontend)
+- **Laravel Sanctum** (autenticación API con tokens)
+- **Maatwebsite/Laravel-Excel** (generación de Excel)
+- **Docker Compose** (app + nginx + mysql)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Docker Engine 24+ y Docker Compose v2
+- (Opcional) PHP 8.3+ y Composer 2 para desarrollo fuera de Docker
 
-## Learning Laravel
+## Estructura de la base de datos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+CLIENTE 1 ──── N CASOS N ──── N ABOGADOS
+                     │
+                     └── caso_abogado (tabla pivote con fecha_asignacion)
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+| Tabla          | Descripción                                  |
+|----------------|----------------------------------------------|
+| `clientes`     | Datos personales del cliente (cédula única)  |
+| `abogados`     | Datos personales del abogado (cédula única)  |
+| `casos`        | Expediente, período, estado, cliente         |
+| `caso_abogado` | Relación N:M caso ↔ abogado                  |
 
-## Contributing
+### No se puede eliminar ningún registro
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+La protección se implementa en dos capas:
 
-## Code of Conduct
+1. **Nivel base de datos** — `database/sql/bufete_abogados.sql` define triggers `BEFORE DELETE` que lanzan `SIGNAL SQLSTATE '45000'` y bloquean la eliminación física de cualquier fila.
+2. **Nivel aplicación** — todos los modelos usan `SoftDeletes` (`deleted_at`); los registros solo se marcan como eliminados.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Instalación con Docker
 
-## Security Vulnerabilities
+```bash
+# 1. Copiar configuración y generar la clave de la aplicación
+cp .env.example .env
+# (la clave se genera automáticamente con el primer `php artisan key:generate`)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 2. Construir y levantar los contenedores
+docker compose up -d --build
 
-## License
+# 3. Instalar dependencias y generar APP_KEY (si no se generó antes)
+docker compose exec app composer install --no-interaction
+docker compose exec app php artisan key:generate
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 4. Migraciones y datos de demostración
+docker compose exec app php artisan migrate --seed
+
+# 5. Compilar assets del frontend (Vite)
+npm install
+npm run build
+```
+
+La aplicación queda disponible en **http://localhost:8080**.
+
+> Nota: `docker-compose.yml` expone MySQL en el puerto `33061` del host para evitar conflictos con instalaciones locales.
+
+## Credenciales de demostración
+
+| Campo    | Valor            |
+|----------|------------------|
+| Email    | `demo@bufete.com`|
+| Password | `password`       |
+
+## API
+
+### Autenticación (Bearer Token)
+
+```
+POST /api/login
+Content-Type: application/json
+
+{ "email": "demo@bufete.com", "password": "password" }
+```
+
+Respuesta:
+
+```json
+{
+  "message": "Autenticación exitosa.",
+  "token": "1|i3t1HXF2ntGL6H2aXxcHG3tsPOiDuCEVybmbHzYf7316ee3c",
+  "token_type": "Bearer",
+  "user": { "id": 1, "name": "Usuario Demo", "email": "demo@bufete.com" }
+}
+```
+
+### Obtener toda la información de un caso por su id
+
+```
+GET /api/casos/{id}
+Authorization: Bearer <token>
+Accept: application/json
+```
+
+Respuestas:
+
+| Código | Caso                                   |
+|--------|----------------------------------------|
+| `200`  | Información completa del caso (cliente + abogados) |
+| `401`  | Token ausente o inválido               |
+| `404`  | El caso no existe                      |
+
+```json
+{
+  "data": {
+    "id": 1,
+    "numero_expediente": "EXP-2024-0001",
+    "estado": { "value": "en_tramite", "label": "En trámite" },
+    "fecha_inicio": "2024-01-15",
+    "fecha_finalizacion": null,
+    "descripcion": "Demanda civil por incumplimiento de contrato",
+    "cliente": { "id": 1, "cedula": "1012345678", "nombre": "Carlos", "apellido": "Gómez" },
+    "abogados": [
+      { "id": 1, "cedula": "2011112222", "nombre": "Juan", "apellido": "Pérez", "fecha_asignacion": "2024-01-15" }
+    ]
+  }
+}
+```
+
+Ejemplo con `curl`:
+
+```bash
+curl -X POST http://localhost:8080/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"demo@bufete.com","password":"password"}'
+
+curl http://localhost:8080/api/casos/1 \
+  -H "Authorization: Bearer <token>" \
+  -H "Accept: application/json"
+```
+
+## Comando de exportación a Excel
+
+Genera un libro con **una hoja independiente por abogado**; cada hoja contiene los clientes y sus casos (expediente, cliente, cédula, estado, fechas y abogados del caso).
+
+```bash
+docker compose exec app php artisan casos:export
+```
+
+Resultado: `storage/app/private/casos_por_abogado.xlsx`
+
+También se puede descargar desde la interfaz web (botón *Exportar Excel* en la barra de navegación).
+
+## Script SQL y consultas
+
+El archivo `database/sql/bufete_abogados.sql` contiene:
+
+1. Esquema completo (tablas, índices, FKs, triggers anti-eliminación).
+2. Datos de demostración (5 clientes, 4 abogados, 10 casos, relaciones N:M).
+3. Las tres consultas solicitadas:
+
+```sql
+-- Casos asociados a un cliente según su cédula
+SELECT c.numero_expediente, c.estado, c.fecha_inicio, c.fecha_finalizacion,
+       cl.cedula, CONCAT(cl.nombre, ' ', cl.apellido) AS cliente
+FROM casos c
+INNER JOIN clientes cl ON cl.id = c.cliente_id
+WHERE cl.cedula = '1012345678'
+ORDER BY c.numero_expediente;
+
+-- Todos los casos en orden ascendente
+SELECT * FROM casos ORDER BY numero_expediente ASC;
+
+-- Los 5 (cinco) primeros registros
+SELECT * FROM casos ORDER BY id ASC LIMIT 5;
+```
+
+## Pruebas
+
+```bash
+docker compose exec app php artisan test
+```
+
+Cubre: autenticación (login, 401, token), recurso de caso (200/401/404), soft delete y generación del Excel con una hoja por abogado.
+
+## Estilo de código
+
+```bash
+docker compose exec app ./vendor/bin/pint
+```
+
+## Estructura del proyecto
+
+```
+app/
+├── Console/Commands/ExportarCasosCommand.php   # php artisan casos:export
+├── Enums/CasoEstado.php                        # estados del caso
+├── Exports/                                    # exportaciones Excel
+│   ├── CasosPorAbogadoExport.php               # libro multi-hoja
+│   └── Sheets/CasosDeAbogadoSheet.php          # hoja por abogado
+├── Http/
+│   ├── Controllers/Api/                        # AuthController, CasoController
+│   ├── Controllers/                            # Dashboard, CasoWeb, Export
+│   ├── Requests/LoginRequest.php               # validación de login
+│   └── Resources/                              # CasoResource, ClienteResource, AbogadoResource
+├── Models/                                     # Cliente, Abogado, Caso, CasoAbogado
+└── Services/AuthService.php                    # lógica de emisión de tokens
+database/
+├── migrations/                                 # esquema (clientes, abogados, casos, caso_abogado)
+├── seeders/                                    # datos de demostración
+└── sql/bufete_abogados.sql                     # script SQL solicitado en la prueba
+docker/nginx/default.conf                       # configuración de nginx
+Dockerfile                                      # imagen php:8.4-fpm-alpine
+docker-compose.yml                              # app + nginx + mysql
+```
+
+## Recursos web
+
+| Ruta            | Descripción                          |
+|-----------------|--------------------------------------|
+| `/`             | Dashboard con indicadores            |
+| `/casos`        | Listado de casos (orden ascendente)  |
+| `/casos/{id}`   | Detalle del caso                     |
+| `/exportar-excel` | Descarga el libro Excel            |
