@@ -113,4 +113,26 @@ class ClienteCrudTest extends TestCase
 
         $this->assertSoftDeleted('clientes', ['id' => $cliente->id]);
     }
+
+    public function test_busca_clientes_por_nombre(): void
+    {
+        $this->auth();
+        $ana = Cliente::factory()->create(['nombre' => 'Ana', 'apellido' => 'López']);
+        $luis = Cliente::factory()->create(['nombre' => 'Luis', 'apellido' => 'Pérez']);
+
+        $this->get('/clientes?q=ana')
+            ->assertOk()
+            ->assertSee('Ana López')
+            ->assertDontSee('Luis Pérez');
+    }
+
+    public function test_pagina_el_listado_de_clientes(): void
+    {
+        $this->auth();
+        Cliente::factory()->count(15)->create();
+
+        $this->get('/clientes')
+            ->assertOk()
+            ->assertSee('page=2');
+    }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Abogado;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Servicio de dominio para la gestión de abogados.
@@ -13,17 +13,27 @@ use Illuminate\Database\Eloquent\Collection;
 final class AbogadoService
 {
     /**
-     * Lista los abogados ordenados alfabéticamente con el número de casos.
+     * Lista paginada de abogados ordenados alfabéticamente con el número de casos.
+     * Si se pasa una búsqueda, filtra por cédula, nombre, apellido, especialidad o email.
      *
-     * @return Collection<int, Abogado>
+     * @return LengthAwarePaginator<int, Abogado>
      */
-    public function list(): Collection
+    public function list(?string $search = null, int $perPage = 10): LengthAwarePaginator
     {
         return Abogado::query()
             ->withCount('casos')
+            ->when($search, static function ($query, string $search): void {
+                $query->where(static function ($query) use ($search): void {
+                    $query->where('cedula', 'like', "%{$search}%")
+                        ->orWhere('nombre', 'like', "%{$search}%")
+                        ->orWhere('apellido', 'like', "%{$search}%")
+                        ->orWhere('especialidad', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
             ->orderBy('apellido')
             ->orderBy('nombre')
-            ->get();
+            ->paginate($perPage);
     }
 
     /**

@@ -42,4 +42,26 @@ enum CasoEstado: string
 
         return $labels;
     }
+
+    /**
+     * Resuelve un estado a partir de su etiqueta, sin distinguir
+     * mayúsculas, espacios ni tildes. Devuelve null si no coincide.
+     */
+    public static function fromLabel(string $label): ?self
+    {
+        $normalize = static fn (string $value): string => strtr(
+            mb_strtolower(trim($value)),
+            ['á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u', 'ñ' => 'n'],
+        );
+
+        $label = $normalize($label);
+
+        foreach (self::cases() as $case) {
+            if ($normalize($case->label()) === $label) {
+                return $case;
+            }
+        }
+
+        return null;
+    }
 }

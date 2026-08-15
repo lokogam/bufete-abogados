@@ -137,4 +137,16 @@ class CasoCrudTest extends TestCase
 
         $this->assertSoftDeleted('casos', ['id' => $caso->id]);
     }
+
+    public function test_busca_casos_por_estado(): void
+    {
+        $this->auth();
+        $archivado = Caso::factory()->archivado()->create();
+        $tramite = Caso::factory()->create();
+
+        $this->get('/casos?q=archivado')
+            ->assertOk()
+            ->assertSee($archivado->numero_expediente)
+            ->assertDontSee($tramite->numero_expediente);
+    }
 }

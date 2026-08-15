@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Cliente;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Servicio de dominio para la gestión de clientes.
@@ -13,17 +13,27 @@ use Illuminate\Database\Eloquent\Collection;
 final class ClienteService
 {
     /**
-     * Lista los clientes ordenados alfabéticamente con el número de casos.
+     * Lista paginada de clientes ordenados alfabéticamente con el número de casos.
+     * Si se pasa una búsqueda, filtra por cédula, nombre, apellido, email o teléfono.
      *
-     * @return Collection<int, Cliente>
+     * @return LengthAwarePaginator<int, Cliente>
      */
-    public function list(): Collection
+    public function list(?string $search = null, int $perPage = 10): LengthAwarePaginator
     {
         return Cliente::query()
             ->withCount('casos')
+            ->when($search, static function ($query, string $search): void {
+                $query->where(static function ($query) use ($search): void {
+                    $query->where('cedula', 'like', "%{$search}%")
+                        ->orWhere('nombre', 'like', "%{$search}%")
+                        ->orWhere('apellido', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('telefono', 'like', "%{$search}%");
+                });
+            })
             ->orderBy('apellido')
             ->orderBy('nombre')
-            ->get();
+            ->paginate($perPage);
     }
 
     /**

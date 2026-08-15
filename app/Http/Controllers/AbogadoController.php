@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateAbogadoRequest;
 use App\Models\Abogado;
 use App\Services\AbogadoService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AbogadoController extends Controller
@@ -16,12 +17,12 @@ class AbogadoController extends Controller
     public function __construct(private readonly AbogadoService $service) {}
 
     /**
-     * Listado de abogados.
+     * Listado paginado de abogados, con búsqueda opcional por el parámetro "q".
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('abogados.index', [
-            'abogados' => $this->service->list(),
+            'abogados' => $this->service->list($request->query('q')),
         ]);
     }
 

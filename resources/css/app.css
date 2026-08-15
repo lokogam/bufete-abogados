@@ -169,7 +169,7 @@
 
     /* ─── Tablas estilizadas ─── */
     .data-table {
-        @apply w-full overflow-hidden rounded-xl border border-gray-200/60 bg-white shadow-sm;
+        @apply w-full overflow-x-auto rounded-xl border border-gray-200/60 bg-white shadow-sm;
     }
 
     .data-table thead {

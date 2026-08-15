@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enums\CasoEstado;
 use App\Models\Caso;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Servicio de dominio para la gestión de casos judiciales.
@@ -13,16 +14,34 @@ use Illuminate\Database\Eloquent\Collection;
 final class CasoService
 {
     /**
-     * Lista los casos con cliente y abogados, ordenados por expediente.
+     * Lista paginada de casos con cliente y abogados, ordenados por expediente.
+     * Si se pasa una búsqueda, filtra por número de expediente, datos del cliente
+     * o etiqueta del estado.
      *
-     * @return Collection<int, Caso>
+     * @return LengthAwarePaginator<int, Caso>
      */
-    public function list(): Collection
+    public function list(?string $search = null, int $perPage = 10): LengthAwarePaginator
     {
+        $estado = $search !== null ? CasoEstado::fromLabel($search) : null;
+
         return Caso::query()
             ->with(['cliente', 'abogados'])
+            ->when($search, static function ($query, string $search) use ($estado): void {
+                $query->where(static function ($query) use ($search, $estado): void {
+                    $query->where('numero_expediente', 'like', "%{$search}%")
+                        ->orWhereHas('cliente', static function ($query) use ($search): void {
+                            $query->where('cedula', 'like', "%{$search}%")
+                                ->orWhere('nombre', 'like', "%{$search}%")
+                                ->orWhere('apellido', 'like', "%{$search}%");
+                        });
+
+                    if ($estado !== null) {
+                        $query->orWhere('estado', $estado);
+                    }
+                });
+            })
             ->orderBy('numero_expediente')
-            ->get();
+            ->paginate($perPage);
     }
 
     /**

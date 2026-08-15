@@ -111,4 +111,16 @@ class AbogadoCrudTest extends TestCase
 
         $this->assertSoftDeleted('abogados', ['id' => $abogado->id]);
     }
+
+    public function test_busca_abogados_por_especialidad(): void
+    {
+        $this->auth();
+        $laboral = Abogado::factory()->create(['nombre' => 'Carlos', 'apellido' => 'Rojas', 'especialidad' => 'Derecho Laboral']);
+        $penal = Abogado::factory()->create(['nombre' => 'María', 'apellido' => 'Torres', 'especialidad' => 'Derecho Penal']);
+
+        $this->get('/abogados?q=penal')
+            ->assertOk()
+            ->assertSee('María Torres')
+            ->assertDontSee('Carlos Rojas');
+    }
 }

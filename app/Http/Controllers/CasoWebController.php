@@ -12,6 +12,7 @@ use App\Models\Caso;
 use App\Models\Cliente;
 use App\Services\CasoService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CasoWebController extends Controller
@@ -19,12 +20,13 @@ class CasoWebController extends Controller
     public function __construct(private readonly CasoService $service) {}
 
     /**
-     * Listado de casos en orden ascendente por expediente.
+     * Listado paginado de casos en orden ascendente por expediente,
+     * con búsqueda opcional por el parámetro "q".
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('casos.index', [
-            'casos' => $this->service->list(),
+            'casos' => $this->service->list($request->query('q')),
         ]);
     }
 

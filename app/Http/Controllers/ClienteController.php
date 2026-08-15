@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Cliente;
 use App\Services\ClienteService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ClienteController extends Controller
@@ -16,12 +17,12 @@ class ClienteController extends Controller
     public function __construct(private readonly ClienteService $service) {}
 
     /**
-     * Listado de clientes.
+     * Listado paginado de clientes, con búsqueda opcional por el parámetro "q".
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('clientes.index', [
-            'clientes' => $this->service->list(),
+            'clientes' => $this->service->list($request->query('q')),
         ]);
     }
 
