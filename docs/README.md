@@ -23,11 +23,8 @@ Define los 15 endpoints del sistema agrupados en:
 - **Abogados** — CRUD (`abogados`)
 - **Casos** — CRUD (`casos`), incluye asignación de abogados
 
-Para regenerar la documentación tras cambiar la API:
-
-```bash
-docker compose exec app php artisan scribe:generate
-```
+La especificación que alimenta la interfaz se mantiene en `public/swagger.json`.
+Si cambia la API, hay que actualizar ese archivo para reflejar los cambios.
 
 ## Colección de Postman
 

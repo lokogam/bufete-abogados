@@ -1,0 +1,1938 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Bufete de Abogados API Documentation",
+        "description": "API REST del sistema del bufete de abogados: autenticación con tokens Bearer (Laravel Sanctum) y operaciones CRUD sobre clientes, abogados y casos.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Abogados",
+            "description": ""
+        },
+        {
+            "name": "Autenticación",
+            "description": ""
+        },
+        {
+            "name": "Casos",
+            "description": ""
+        },
+        {
+            "name": "Clientes",
+            "description": ""
+        },
+        {
+            "name": "Endpoints",
+            "description": ""
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "default": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "Obtén tu token con `POST /api/login` o `POST /api/register` y envíalo en el encabezado `Authorization: Bearer {token}`."
+            }
+        }
+    },
+    "security": [
+        {
+            "default": []
+        }
+    ],
+    "paths": {
+        "/api/abogados": {
+            "get": {
+                "summary": "Lista todos los abogados ordenados alfabéticamente.",
+                "operationId": "listaTodosLosAbogadosOrdenadosAlfabticamente",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "id": 1,
+                                                "cedula": "1234567890",
+                                                "nombre": "Carlos",
+                                                "apellido": "Ruiz",
+                                                "nombre_completo": "Carlos Ruiz",
+                                                "email": "carlos@example.com",
+                                                "telefono": "3101234567",
+                                                "especialidad": "Derecho Civil"
+                                            }
+                                        ]
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "example": [
+                                                {
+                                                    "id": 1,
+                                                    "cedula": "1234567890",
+                                                    "nombre": "Carlos",
+                                                    "apellido": "Ruiz",
+                                                    "nombre_completo": "Carlos Ruiz",
+                                                    "email": "carlos@example.com",
+                                                    "telefono": "3101234567",
+                                                    "especialidad": "Derecho Civil"
+                                                }
+                                            ],
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "cedula": {
+                                                        "type": "string",
+                                                        "example": "1234567890"
+                                                    },
+                                                    "nombre": {
+                                                        "type": "string",
+                                                        "example": "Carlos"
+                                                    },
+                                                    "apellido": {
+                                                        "type": "string",
+                                                        "example": "Ruiz"
+                                                    },
+                                                    "nombre_completo": {
+                                                        "type": "string",
+                                                        "example": "Carlos Ruiz"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "carlos@example.com"
+                                                    },
+                                                    "telefono": {
+                                                        "type": "string",
+                                                        "example": "3101234567"
+                                                    },
+                                                    "especialidad": {
+                                                        "type": "string",
+                                                        "example": "Derecho Civil"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Abogados"
+                ]
+            },
+            "post": {
+                "summary": "Crea un nuevo abogado.",
+                "operationId": "creaUnNuevoAbogado",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": 2,
+                                            "cedula": "9876543210",
+                                            "nombre": "Carlos",
+                                            "apellido": "Ruiz",
+                                            "nombre_completo": "Carlos Ruiz",
+                                            "email": "carlos@example.com",
+                                            "telefono": "3101234567",
+                                            "especialidad": "Derecho Civil"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "cedula": {
+                                                    "type": "string",
+                                                    "example": "9876543210"
+                                                },
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "Carlos"
+                                                },
+                                                "apellido": {
+                                                    "type": "string",
+                                                    "example": "Ruiz"
+                                                },
+                                                "nombre_completo": {
+                                                    "type": "string",
+                                                    "example": "Carlos Ruiz"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "carlos@example.com"
+                                                },
+                                                "telefono": {
+                                                    "type": "string",
+                                                    "example": "3101234567"
+                                                },
+                                                "especialidad": {
+                                                    "type": "string",
+                                                    "example": "Derecho Civil"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Abogados"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cedula": {
+                                        "type": "string",
+                                        "description": "Cédula de identidad, única.",
+                                        "example": "9876543210"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "description": "Nombre del abogado.",
+                                        "example": "Carlos"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "description": "Apellido del abogado.",
+                                        "example": "Ruiz"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email del abogado.",
+                                        "example": "carlos@example.com",
+                                        "nullable": true
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "description": "Teléfono del abogado.",
+                                        "example": "3101234567",
+                                        "nullable": true
+                                    },
+                                    "especialidad": {
+                                        "type": "string",
+                                        "description": "Especialidad profesional.",
+                                        "example": "Derecho Civil",
+                                        "nullable": true
+                                    }
+                                },
+                                "required": [
+                                    "cedula",
+                                    "nombre",
+                                    "apellido"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/abogados/{id}": {
+            "get": {
+                "summary": "Devuelve la información de un abogado.",
+                "operationId": "devuelveLaInformacinDeUnAbogado",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": 1,
+                                            "cedula": "1234567890",
+                                            "nombre": "Carlos",
+                                            "apellido": "Ruiz",
+                                            "nombre_completo": "Carlos Ruiz",
+                                            "email": "carlos@example.com",
+                                            "telefono": "3101234567",
+                                            "especialidad": "Derecho Civil"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "cedula": {
+                                                    "type": "string",
+                                                    "example": "1234567890"
+                                                },
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "Carlos"
+                                                },
+                                                "apellido": {
+                                                    "type": "string",
+                                                    "example": "Ruiz"
+                                                },
+                                                "nombre_completo": {
+                                                    "type": "string",
+                                                    "example": "Carlos Ruiz"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "carlos@example.com"
+                                                },
+                                                "telefono": {
+                                                    "type": "string",
+                                                    "example": "3101234567"
+                                                },
+                                                "especialidad": {
+                                                    "type": "string",
+                                                    "example": "Derecho Civil"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Abogados"
+                ]
+            },
+            "put": {
+                "summary": "Actualiza los datos de un abogado.",
+                "operationId": "actualizaLosDatosDeUnAbogado",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "401": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Unauthenticated."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Abogados"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cedula": {
+                                        "type": "string",
+                                        "description": "Cédula de identidad, única.",
+                                        "example": "9876543210"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "description": "Nombre del abogado.",
+                                        "example": "Carlos"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "description": "Apellido del abogado.",
+                                        "example": "Ruiz"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email del abogado.",
+                                        "example": "carlos@example.com",
+                                        "nullable": true
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "description": "Teléfono del abogado.",
+                                        "example": "3101234567",
+                                        "nullable": true
+                                    },
+                                    "especialidad": {
+                                        "type": "string",
+                                        "description": "Especialidad profesional.",
+                                        "example": "Derecho Civil",
+                                        "nullable": true
+                                    }
+                                },
+                                "required": [
+                                    "cedula",
+                                    "nombre",
+                                    "apellido"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina un abogado de forma lógica (soft delete).",
+                "operationId": "eliminaUnAbogadoDeFormaLgicasoftDelete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Abogado eliminado."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Abogado eliminado."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Abogados"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "description": "The ID of the abogado.",
+                    "example": 1,
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                },
+                {
+                    "in": "path",
+                    "name": "abogado",
+                    "description": "ID del abogado.",
+                    "example": 1,
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ]
+        },
+        "/api/login": {
+            "post": {
+                "summary": "Autentica al usuario y devuelve un token Bearer de acceso.",
+                "operationId": "autenticaAlUsuarioYDevuelveUnTokenBearerDeAcceso",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Credenciales válidas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Autenticación exitosa.",
+                                        "token": "1|xxxxxxxxxxxxxxxxxxxx",
+                                        "token_type": "Bearer",
+                                        "user": {
+                                            "id": 1,
+                                            "name": "Demo Bufete",
+                                            "email": "demo@bufete.com"
+                                        }
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Autenticación exitosa."
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|xxxxxxxxxxxxxxxxxxxx",
+                                            "description": "Token Bearer para autenticar las siguientes peticiones."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer",
+                                            "description": "Tipo de token, siempre \"Bearer\"."
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Demo Bufete"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "demo@bufete.com"
+                                                }
+                                            },
+                                            "description": "Datos públicos del usuario autenticado."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales inválidas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Credenciales inválidas."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Credenciales inválidas."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Autenticación"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email del usuario.",
+                                        "example": "demo@bufete.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Contraseña del usuario.",
+                                        "example": "password"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/register": {
+            "post": {
+                "summary": "Registra un nuevo usuario y devuelve un token Bearer de acceso.",
+                "operationId": "registraUnNuevoUsuarioYDevuelveUnTokenBearerDeAcceso",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "Registro exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Registro exitoso.",
+                                        "token": "1|xxxxxxxxxxxxxxxxxxxx",
+                                        "token_type": "Bearer",
+                                        "user": {
+                                            "id": 2,
+                                            "name": "Juan Pérez",
+                                            "email": "juan@example.com"
+                                        }
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro exitoso."
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|xxxxxxxxxxxxxxxxxxxx",
+                                            "description": "Token Bearer para autenticar las siguientes peticiones."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Juan Pérez"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "juan@example.com"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Datos inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "The email has already been taken."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The email has already been taken."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Autenticación"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Nombre completo del usuario.",
+                                        "example": "Juan Pérez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email del usuario.",
+                                        "example": "juan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Contraseña (mínimo 8 caracteres).",
+                                        "example": "secret123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "description": "Confirmación de la contraseña.",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "summary": "Cierra la sesión revocando el token Bearer actual.",
+                "operationId": "cierraLaSesinRevocandoElTokenBearerActual",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Sesión cerrada correctamente."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sesión cerrada correctamente."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Autenticación"
+                ]
+            }
+        },
+        "/api/casos": {
+            "get": {
+                "summary": "Lista todos los casos, incluyendo cliente y abogados.",
+                "operationId": "listaTodosLosCasosIncluyendoClienteYAbogados",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "id": 1,
+                                                "numero_expediente": "EXP-0001-2024",
+                                                "estado": {
+                                                    "value": "en_tramite",
+                                                    "label": "En trámite"
+                                                },
+                                                "fecha_inicio": "2024-01-15",
+                                                "fecha_finalizacion": null,
+                                                "descripcion": "Demanda laboral",
+                                                "cliente": {
+                                                    "id": 1,
+                                                    "cedula": "1234567890",
+                                                    "nombre": "Ana",
+                                                    "apellido": "Gómez",
+                                                    "nombre_completo": "Ana Gómez",
+                                                    "email": "ana@example.com",
+                                                    "telefono": "3001234567",
+                                                    "direccion": "Calle 1 #2-3"
+                                                },
+                                                "abogados": []
+                                            }
+                                        ]
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "example": [
+                                                {
+                                                    "id": 1,
+                                                    "numero_expediente": "EXP-0001-2024",
+                                                    "estado": {
+                                                        "value": "en_tramite",
+                                                        "label": "En trámite"
+                                                    },
+                                                    "fecha_inicio": "2024-01-15",
+                                                    "fecha_finalizacion": null,
+                                                    "descripcion": "Demanda laboral",
+                                                    "cliente": {
+                                                        "id": 1,
+                                                        "cedula": "1234567890",
+                                                        "nombre": "Ana",
+                                                        "apellido": "Gómez",
+                                                        "nombre_completo": "Ana Gómez",
+                                                        "email": "ana@example.com",
+                                                        "telefono": "3001234567",
+                                                        "direccion": "Calle 1 #2-3"
+                                                    },
+                                                    "abogados": []
+                                                }
+                                            ],
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "numero_expediente": {
+                                                        "type": "string",
+                                                        "example": "EXP-0001-2024"
+                                                    },
+                                                    "estado": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "string",
+                                                                "example": "en_tramite"
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "En trámite"
+                                                            }
+                                                        }
+                                                    },
+                                                    "fecha_inicio": {
+                                                        "type": "string",
+                                                        "example": "2024-01-15"
+                                                    },
+                                                    "fecha_finalizacion": {
+                                                        "type": "string",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "descripcion": {
+                                                        "type": "string",
+                                                        "example": "Demanda laboral"
+                                                    },
+                                                    "cliente": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "cedula": {
+                                                                "type": "string",
+                                                                "example": "1234567890"
+                                                            },
+                                                            "nombre": {
+                                                                "type": "string",
+                                                                "example": "Ana"
+                                                            },
+                                                            "apellido": {
+                                                                "type": "string",
+                                                                "example": "Gómez"
+                                                            },
+                                                            "nombre_completo": {
+                                                                "type": "string",
+                                                                "example": "Ana Gómez"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "ana@example.com"
+                                                            },
+                                                            "telefono": {
+                                                                "type": "string",
+                                                                "example": "3001234567"
+                                                            },
+                                                            "direccion": {
+                                                                "type": "string",
+                                                                "example": "Calle 1 #2-3"
+                                                            }
+                                                        }
+                                                    },
+                                                    "abogados": {
+                                                        "type": "array",
+                                                        "example": []
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Casos"
+                ]
+            },
+            "post": {
+                "summary": "Crea un nuevo caso y asigna los abogados indicados.",
+                "operationId": "creaUnNuevoCasoYAsignaLosAbogadosIndicados",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": 2,
+                                            "numero_expediente": "EXP-0002-2024",
+                                            "estado": {
+                                                "value": "en_tramite",
+                                                "label": "En trámite"
+                                            },
+                                            "fecha_inicio": "2024-03-01",
+                                            "fecha_finalizacion": null,
+                                            "descripcion": "Contrato incumplido",
+                                            "cliente": {
+                                                "id": 1,
+                                                "cedula": "1234567890",
+                                                "nombre": "Ana",
+                                                "apellido": "Gómez",
+                                                "nombre_completo": "Ana Gómez",
+                                                "email": "ana@example.com",
+                                                "telefono": "3001234567",
+                                                "direccion": "Calle 1 #2-3"
+                                            },
+                                            "abogados": [
+                                                {
+                                                    "id": 1,
+                                                    "cedula": "1234567890",
+                                                    "nombre": "Carlos",
+                                                    "apellido": "Ruiz",
+                                                    "nombre_completo": "Carlos Ruiz",
+                                                    "email": "carlos@example.com",
+                                                    "telefono": "3101234567",
+                                                    "especialidad": "Derecho Civil"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "numero_expediente": {
+                                                    "type": "string",
+                                                    "example": "EXP-0002-2024"
+                                                },
+                                                "estado": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "value": {
+                                                            "type": "string",
+                                                            "example": "en_tramite"
+                                                        },
+                                                        "label": {
+                                                            "type": "string",
+                                                            "example": "En trámite"
+                                                        }
+                                                    }
+                                                },
+                                                "fecha_inicio": {
+                                                    "type": "string",
+                                                    "example": "2024-03-01"
+                                                },
+                                                "fecha_finalizacion": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "descripcion": {
+                                                    "type": "string",
+                                                    "example": "Contrato incumplido"
+                                                },
+                                                "cliente": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "cedula": {
+                                                            "type": "string",
+                                                            "example": "1234567890"
+                                                        },
+                                                        "nombre": {
+                                                            "type": "string",
+                                                            "example": "Ana"
+                                                        },
+                                                        "apellido": {
+                                                            "type": "string",
+                                                            "example": "Gómez"
+                                                        },
+                                                        "nombre_completo": {
+                                                            "type": "string",
+                                                            "example": "Ana Gómez"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "ana@example.com"
+                                                        },
+                                                        "telefono": {
+                                                            "type": "string",
+                                                            "example": "3001234567"
+                                                        },
+                                                        "direccion": {
+                                                            "type": "string",
+                                                            "example": "Calle 1 #2-3"
+                                                        }
+                                                    }
+                                                },
+                                                "abogados": {
+                                                    "type": "array",
+                                                    "example": [
+                                                        {
+                                                            "id": 1,
+                                                            "cedula": "1234567890",
+                                                            "nombre": "Carlos",
+                                                            "apellido": "Ruiz",
+                                                            "nombre_completo": "Carlos Ruiz",
+                                                            "email": "carlos@example.com",
+                                                            "telefono": "3101234567",
+                                                            "especialidad": "Derecho Civil"
+                                                        }
+                                                    ],
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "cedula": {
+                                                                "type": "string",
+                                                                "example": "1234567890"
+                                                            },
+                                                            "nombre": {
+                                                                "type": "string",
+                                                                "example": "Carlos"
+                                                            },
+                                                            "apellido": {
+                                                                "type": "string",
+                                                                "example": "Ruiz"
+                                                            },
+                                                            "nombre_completo": {
+                                                                "type": "string",
+                                                                "example": "Carlos Ruiz"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "carlos@example.com"
+                                                            },
+                                                            "telefono": {
+                                                                "type": "string",
+                                                                "example": "3101234567"
+                                                            },
+                                                            "especialidad": {
+                                                                "type": "string",
+                                                                "example": "Derecho Civil"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Casos"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "numero_expediente": {
+                                        "type": "string",
+                                        "description": "Número de expediente, único.",
+                                        "example": "EXP-0002-2024"
+                                    },
+                                    "cliente_id": {
+                                        "type": "integer",
+                                        "description": "ID del cliente.",
+                                        "example": 1
+                                    },
+                                    "fecha_inicio": {
+                                        "type": "date",
+                                        "description": "Fecha de inicio del caso.",
+                                        "example": "2024-03-01"
+                                    },
+                                    "fecha_finalizacion": {
+                                        "type": "date",
+                                        "description": "Fecha de finalización (si aplica).",
+                                        "example": "2024-09-01",
+                                        "nullable": true
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "description": "Estado del caso.",
+                                        "example": "en_tramite",
+                                        "enum": [
+                                            "en_tramite",
+                                            "archivado",
+                                            "sentenciado",
+                                            "desistido",
+                                            "suspendido"
+                                        ]
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "description": "Descripción del caso.",
+                                        "example": "Contrato incumplido",
+                                        "nullable": true
+                                    },
+                                    "abogados": {
+                                        "type": "array<int>",
+                                        "description": "Lista de IDs de abogados asignados.",
+                                        "example": "[1, 2]"
+                                    }
+                                },
+                                "required": [
+                                    "numero_expediente",
+                                    "cliente_id",
+                                    "fecha_inicio",
+                                    "estado"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/casos/{id}": {
+            "get": {
+                "summary": "Devuelve toda la información de un caso, incluyendo cliente y abogados.",
+                "operationId": "devuelveTodaLaInformacinDeUnCasoIncluyendoClienteYAbogados",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": 1,
+                                            "numero_expediente": "EXP-0001-2024",
+                                            "estado": {
+                                                "value": "en_tramite",
+                                                "label": "En trámite"
+                                            },
+                                            "fecha_inicio": "2024-01-15",
+                                            "fecha_finalizacion": null,
+                                            "descripcion": "Demanda laboral",
+                                            "cliente": {
+                                                "id": 1,
+                                                "cedula": "1234567890",
+                                                "nombre": "Ana",
+                                                "apellido": "Gómez",
+                                                "nombre_completo": "Ana Gómez",
+                                                "email": "ana@example.com",
+                                                "telefono": "3001234567",
+                                                "direccion": "Calle 1 #2-3"
+                                            },
+                                            "abogados": [
+                                                {
+                                                    "id": 1,
+                                                    "cedula": "1234567890",
+                                                    "nombre": "Carlos",
+                                                    "apellido": "Ruiz",
+                                                    "nombre_completo": "Carlos Ruiz",
+                                                    "email": "carlos@example.com",
+                                                    "telefono": "3101234567",
+                                                    "especialidad": "Derecho Civil"
+                                                }
+                                            ],
+                                            "created_at": "2024-01-15T10:00:00+00:00",
+                                            "updated_at": "2024-01-15T10:00:00+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "numero_expediente": {
+                                                    "type": "string",
+                                                    "example": "EXP-0001-2024"
+                                                },
+                                                "estado": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "value": {
+                                                            "type": "string",
+                                                            "example": "en_tramite"
+                                                        },
+                                                        "label": {
+                                                            "type": "string",
+                                                            "example": "En trámite"
+                                                        }
+                                                    }
+                                                },
+                                                "fecha_inicio": {
+                                                    "type": "string",
+                                                    "example": "2024-01-15"
+                                                },
+                                                "fecha_finalizacion": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "descripcion": {
+                                                    "type": "string",
+                                                    "example": "Demanda laboral"
+                                                },
+                                                "cliente": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "cedula": {
+                                                            "type": "string",
+                                                            "example": "1234567890"
+                                                        },
+                                                        "nombre": {
+                                                            "type": "string",
+                                                            "example": "Ana"
+                                                        },
+                                                        "apellido": {
+                                                            "type": "string",
+                                                            "example": "Gómez"
+                                                        },
+                                                        "nombre_completo": {
+                                                            "type": "string",
+                                                            "example": "Ana Gómez"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "ana@example.com"
+                                                        },
+                                                        "telefono": {
+                                                            "type": "string",
+                                                            "example": "3001234567"
+                                                        },
+                                                        "direccion": {
+                                                            "type": "string",
+                                                            "example": "Calle 1 #2-3"
+                                                        }
+                                                    }
+                                                },
+                                                "abogados": {
+                                                    "type": "array",
+                                                    "example": [
+                                                        {
+                                                            "id": 1,
+                                                            "cedula": "1234567890",
+                                                            "nombre": "Carlos",
+                                                            "apellido": "Ruiz",
+                                                            "nombre_completo": "Carlos Ruiz",
+                                                            "email": "carlos@example.com",
+                                                            "telefono": "3101234567",
+                                                            "especialidad": "Derecho Civil"
+                                                        }
+                                                    ],
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "cedula": {
+                                                                "type": "string",
+                                                                "example": "1234567890"
+                                                            },
+                                                            "nombre": {
+                                                                "type": "string",
+                                                                "example": "Carlos"
+                                                            },
+                                                            "apellido": {
+                                                                "type": "string",
+                                                                "example": "Ruiz"
+                                                            },
+                                                            "nombre_completo": {
+                                                                "type": "string",
+                                                                "example": "Carlos Ruiz"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "carlos@example.com"
+                                                            },
+                                                            "telefono": {
+                                                                "type": "string",
+                                                                "example": "3101234567"
+                                                            },
+                                                            "especialidad": {
+                                                                "type": "string",
+                                                                "example": "Derecho Civil"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2024-01-15T10:00:00+00:00"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2024-01-15T10:00:00+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Casos"
+                ]
+            },
+            "put": {
+                "summary": "Actualiza los datos de un caso y sus abogados asignados.",
+                "operationId": "actualizaLosDatosDeUnCasoYSusAbogadosAsignados",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "401": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Unauthenticated."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Casos"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "numero_expediente": {
+                                        "type": "string",
+                                        "description": "Número de expediente, único.",
+                                        "example": "EXP-0002-2024"
+                                    },
+                                    "cliente_id": {
+                                        "type": "integer",
+                                        "description": "ID del cliente.",
+                                        "example": 1
+                                    },
+                                    "fecha_inicio": {
+                                        "type": "date",
+                                        "description": "Fecha de inicio del caso.",
+                                        "example": "2024-03-01"
+                                    },
+                                    "fecha_finalizacion": {
+                                        "type": "date",
+                                        "description": "Fecha de finalización (si aplica).",
+                                        "example": "2024-09-01",
+                                        "nullable": true
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "description": "Estado del caso.",
+                                        "example": "en_tramite",
+                                        "enum": [
+                                            "en_tramite",
+                                            "archivado",
+                                            "sentenciado",
+                                            "desistido",
+                                            "suspendido"
+                                        ]
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "description": "Descripción del caso.",
+                                        "example": "Contrato incumplido",
+                                        "nullable": true
+                                    },
+                                    "abogados": {
+                                        "type": "array<int>",
+                                        "description": "Lista de IDs de abogados asignados.",
+                                        "example": "[1, 2]"
+                                    }
+                                },
+                                "required": [
+                                    "numero_expediente",
+                                    "cliente_id",
+                                    "fecha_inicio",
+                                    "estado"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina un caso de forma lógica (soft delete).",
+                "operationId": "eliminaUnCasoDeFormaLgicasoftDelete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Caso eliminado."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Caso eliminado."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Casos"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "description": "The ID of the caso.",
+                    "example": 1,
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                },
+                {
+                    "in": "path",
+                    "name": "caso",
+                    "description": "ID del caso.",
+                    "example": 1,
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ]
+        },
+        "/api/clientes": {
+            "get": {
+                "summary": "Lista todos los clientes ordenados alfabéticamente.",
+                "operationId": "listaTodosLosClientesOrdenadosAlfabticamente",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "id": 1,
+                                                "cedula": "1234567890",
+                                                "nombre": "Ana",
+                                                "apellido": "Gómez",
+                                                "nombre_completo": "Ana Gómez",
+                                                "email": "ana@example.com",
+                                                "telefono": "3001234567",
+                                                "direccion": "Calle 1 #2-3"
+                                            }
+                                        ]
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "example": [
+                                                {
+                                                    "id": 1,
+                                                    "cedula": "1234567890",
+                                                    "nombre": "Ana",
+                                                    "apellido": "Gómez",
+                                                    "nombre_completo": "Ana Gómez",
+                                                    "email": "ana@example.com",
+                                                    "telefono": "3001234567",
+                                                    "direccion": "Calle 1 #2-3"
+                                                }
+                                            ],
+                                            "description": "Lista de clientes.",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "cedula": {
+                                                        "type": "string",
+                                                        "example": "1234567890"
+                                                    },
+                                                    "nombre": {
+                                                        "type": "string",
+                                                        "example": "Ana"
+                                                    },
+                                                    "apellido": {
+                                                        "type": "string",
+                                                        "example": "Gómez"
+                                                    },
+                                                    "nombre_completo": {
+                                                        "type": "string",
+                                                        "example": "Ana Gómez"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "ana@example.com"
+                                                    },
+                                                    "telefono": {
+                                                        "type": "string",
+                                                        "example": "3001234567"
+                                                    },
+                                                    "direccion": {
+                                                        "type": "string",
+                                                        "example": "Calle 1 #2-3"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Clientes"
+                ]
+            },
+            "post": {
+                "summary": "Crea un nuevo cliente.",
+                "operationId": "creaUnNuevoCliente",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": 2,
+                                            "cedula": "9876543210",
+                                            "nombre": "Ana",
+                                            "apellido": "Gómez",
+                                            "nombre_completo": "Ana Gómez",
+                                            "email": "ana@example.com",
+                                            "telefono": "3001234567",
+                                            "direccion": "Calle 1 #2-3"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "cedula": {
+                                                    "type": "string",
+                                                    "example": "9876543210"
+                                                },
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "Ana"
+                                                },
+                                                "apellido": {
+                                                    "type": "string",
+                                                    "example": "Gómez"
+                                                },
+                                                "nombre_completo": {
+                                                    "type": "string",
+                                                    "example": "Ana Gómez"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "ana@example.com"
+                                                },
+                                                "telefono": {
+                                                    "type": "string",
+                                                    "example": "3001234567"
+                                                },
+                                                "direccion": {
+                                                    "type": "string",
+                                                    "example": "Calle 1 #2-3"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Clientes"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cedula": {
+                                        "type": "string",
+                                        "description": "Cédula de identidad, única.",
+                                        "example": "9876543210"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "description": "Nombre del cliente.",
+                                        "example": "Ana"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "description": "Apellido del cliente.",
+                                        "example": "Gómez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email del cliente.",
+                                        "example": "ana@example.com",
+                                        "nullable": true
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "description": "Teléfono del cliente.",
+                                        "example": "3001234567",
+                                        "nullable": true
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "description": "Dirección del cliente.",
+                                        "example": "Calle 1 #2-3",
+                                        "nullable": true
+                                    }
+                                },
+                                "required": [
+                                    "cedula",
+                                    "nombre",
+                                    "apellido"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/clientes/{id}": {
+            "get": {
+                "summary": "Devuelve la información de un cliente.",
+                "operationId": "devuelveLaInformacinDeUnCliente",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": 1,
+                                            "cedula": "1234567890",
+                                            "nombre": "Ana",
+                                            "apellido": "Gómez",
+                                            "nombre_completo": "Ana Gómez",
+                                            "email": "ana@example.com",
+                                            "telefono": "3001234567",
+                                            "direccion": "Calle 1 #2-3"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "cedula": {
+                                                    "type": "string",
+                                                    "example": "1234567890"
+                                                },
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "Ana"
+                                                },
+                                                "apellido": {
+                                                    "type": "string",
+                                                    "example": "Gómez"
+                                                },
+                                                "nombre_completo": {
+                                                    "type": "string",
+                                                    "example": "Ana Gómez"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "ana@example.com"
+                                                },
+                                                "telefono": {
+                                                    "type": "string",
+                                                    "example": "3001234567"
+                                                },
+                                                "direccion": {
+                                                    "type": "string",
+                                                    "example": "Calle 1 #2-3"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Clientes"
+                ]
+            },
+            "put": {
+                "summary": "Actualiza los datos de un cliente.",
+                "operationId": "actualizaLosDatosDeUnCliente",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "401": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Unauthenticated."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Clientes"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cedula": {
+                                        "type": "string",
+                                        "description": "Cédula de identidad, única.",
+                                        "example": "9876543210"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "description": "Nombre del cliente.",
+                                        "example": "Ana"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "description": "Apellido del cliente.",
+                                        "example": "Gómez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email del cliente.",
+                                        "example": "ana@example.com",
+                                        "nullable": true
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "description": "Teléfono del cliente.",
+                                        "example": "3001234567",
+                                        "nullable": true
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "description": "Dirección del cliente.",
+                                        "example": "Calle 1 #2-3",
+                                        "nullable": true
+                                    }
+                                },
+                                "required": [
+                                    "cedula",
+                                    "nombre",
+                                    "apellido"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina un cliente de forma lógica (soft delete).",
+                "operationId": "eliminaUnClienteDeFormaLgicasoftDelete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Cliente eliminado."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cliente eliminado."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Clientes"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "description": "The ID of the cliente.",
+                    "example": 1,
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                },
+                {
+                    "in": "path",
+                    "name": "cliente",
+                    "description": "ID del cliente.",
+                    "example": 1,
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ]
+        },
+        "/api/user": {
+            "get": {
+                "summary": "",
+                "operationId": "getApiUser",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "401": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Unauthenticated."
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Endpoints"
+                ]
+            }
+        }
+    }
+}

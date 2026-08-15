@@ -7,9 +7,7 @@ use App\Http\Controllers\CasoWebController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -32,10 +30,11 @@ Route::middleware('auth')->group(function (): void {
     Route::resource('casos', CasoWebController::class);
 });
 
-$docsUrl = config('scribe.laravel.docs_url', '/docs');
+Route::get('/docs', fn (): \Illuminate\Contracts\View\View => view('swagger'))->name('docs');
 
-Route::view($docsUrl, 'scribe.index')->name('scribe');
+Route::get('/docs.postman', function () {
+    $collection = base_path('docs/postman/bufete_abogados.postman_collection.json');
 
-Route::get("{$docsUrl}.postman", function (): JsonResponse {
-    return new JsonResponse(Storage::disk('local')->get('scribe/collection.json'), json: true);
-})->name('scribe.postman');
+    return response(file_get_contents($collection))
+        ->header('Content-Type', 'application/json');
+})->name('docs.postman');
