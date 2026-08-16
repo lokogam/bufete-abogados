@@ -1,15 +1,4 @@
-# Bufete de Abogados — Prueba técnica
-
-![Laravel](https://img.shields.io/badge/Laravel-13.x-FF2D20?logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.4-4479A1?logo=mysql&logoColor=white)
-![Tailwind](https://img.shields.io/badge/TailwindCSS-4-06B6D4?logo=tailwindcss&logoColor=white)
-![Sanctum](https://img.shields.io/badge/Auth-Laravel%20Sanctum-FF2D20?logo=laravel)
-![Swagger](https://img.shields.io/badge/API%20Docs-Swagger%20UI-85EA2D?logo=swagger)
-![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
-![Tests](https://img.shields.io/badge/Tests-PHPUnit-green?logo=phpunit)
-
-Sistema de gestión para un bufete de abogados: **clientes**, **expedientes (casos)** y **abogados asignados**, con CRUD completo (web + API), autenticación (sesión web y tokens Bearer), documentación interactiva de la API con **Swagger UI** y exportación a **Excel** con una hoja por abogado. El proyecto corre íntegramente sobre **Docker**.
+# bufete-abogados
 
 ## 📌 Tabla de Contenidos
 
@@ -443,4 +432,5 @@ docker-compose.yml                              # app + nginx + mysql
 **Duvan Gamboa**
 
 - LinkedIn: [Duvan Gamboa](https://www.linkedin.com/in/duvan-gamboa-5193951b2/)
-- Email: [duvangamboa8@gmail.com](mailto:duvangamboa8@gmail.com)
+- Email: [info@duvangamboa.dev](mailto:info@duvangamboa.dev)
+- Web: [https://duvangamboa.dev](https://duvangamboa.dev)
