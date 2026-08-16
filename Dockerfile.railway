@@ -1,6 +1,8 @@
 FROM php:8.4-fpm-alpine
-
+# =========================================================
 # Dependencias del sistema
+# =========================================================
+
 RUN apk add --no-cache \
     nginx \
     supervisor \
@@ -9,9 +11,14 @@ RUN apk add --no-cache \
     freetype \
     libzip \
     icu \
-    oniguruma
+    oniguruma \
+    nodejs \
+    npm
 
+# =========================================================
 # Dependencias para compilar extensiones PHP
+# =========================================================
+
 RUN apk add --no-cache --virtual .build-deps \
     libpng-dev \
     libjpeg-turbo-dev \
@@ -32,12 +39,18 @@ RUN apk add --no-cache --virtual .build-deps \
         opcache \
     && apk del .build-deps
 
+# =========================================================
 # Composer
+# =========================================================
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Primero dependencias para aprovechar cache
+# =========================================================
+# Dependencias PHP
+# =========================================================
+
 COPY composer.json composer.lock ./
 
 RUN composer install \
@@ -47,13 +60,36 @@ RUN composer install \
     --optimize-autoloader \
     --no-scripts
 
-# Código Laravel
+# =========================================================
+# Dependencias frontend
+# =========================================================
+
+COPY package.json package-lock.json* ./
+
+RUN npm install
+
+# =========================================================
+# Código de Laravel
+# =========================================================
+
 COPY . .
 
-# Autoload
+# =========================================================
+# Build de Vite
+# =========================================================
+
+RUN npm run build
+
+# =========================================================
+# Autoload de Composer
+# =========================================================
+
 RUN composer dump-autoload --optimize
 
+# =========================================================
 # Permisos Laravel
+# =========================================================
+
 RUN mkdir -p \
     storage/framework/cache \
     storage/framework/sessions \
@@ -63,13 +99,24 @@ RUN mkdir -p \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
-# Configuración Nginx
-COPY docker/railway/nginx.conf /etc/nginx/http.d/default.conf
+# =========================================================
+# Nginx
+# =========================================================
 
-# Configuración Supervisor
-COPY docker/railway/supervisord.conf /etc/supervisord.conf
+COPY docker/railway/nginx.conf \
+    /etc/nginx/http.d/default.conf
 
-# Railway utilizará este puerto
+# =========================================================
+# Supervisor
+# =========================================================
+
+COPY docker/railway/supervisord.conf \
+    /etc/supervisord.conf
+
+# =========================================================
+# Puerto Railway
+# =========================================================
+
 EXPOSE 8080
 
 CMD ["supervisord", "-c", "/etc/supervisord.conf"]
