@@ -872,7 +872,10 @@
                                                     },
                                                     "abogados": {
                                                         "type": "array",
-                                                        "example": []
+                                                        "example": [],
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
                                                     }
                                                 }
                                             }
@@ -1090,12 +1093,14 @@
                                         "example": 1
                                     },
                                     "fecha_inicio": {
-                                        "type": "date",
+                                        "type": "string",
+                                        "format": "date",
                                         "description": "Fecha de inicio del caso.",
                                         "example": "2024-03-01"
                                     },
                                     "fecha_finalizacion": {
-                                        "type": "date",
+                                        "type": "string",
+                                        "format": "date",
                                         "description": "Fecha de finalización (si aplica).",
                                         "example": "2024-09-01",
                                         "nullable": true
@@ -1119,9 +1124,15 @@
                                         "nullable": true
                                     },
                                     "abogados": {
-                                        "type": "array<int>",
+                                        "type": "array",
                                         "description": "Lista de IDs de abogados asignados.",
-                                        "example": "[1, 2]"
+                                        "example": [
+                                            1,
+                                            2
+                                        ],
+                                        "items": {
+                                            "type": "integer"
+                                        }
                                     }
                                 },
                                 "required": [
@@ -1380,12 +1391,14 @@
                                         "example": 1
                                     },
                                     "fecha_inicio": {
-                                        "type": "date",
+                                        "type": "string",
+                                        "format": "date",
                                         "description": "Fecha de inicio del caso.",
                                         "example": "2024-03-01"
                                     },
                                     "fecha_finalizacion": {
-                                        "type": "date",
+                                        "type": "string",
+                                        "format": "date",
                                         "description": "Fecha de finalización (si aplica).",
                                         "example": "2024-09-01",
                                         "nullable": true
@@ -1409,9 +1422,15 @@
                                         "nullable": true
                                     },
                                     "abogados": {
-                                        "type": "array<int>",
+                                        "type": "array",
                                         "description": "Lista de IDs de abogados asignados.",
-                                        "example": "[1, 2]"
+                                        "example": [
+                                            1,
+                                            2
+                                        ],
+                                        "items": {
+                                            "type": "integer"
+                                        }
                                     }
                                 },
                                 "required": [
