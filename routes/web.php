@@ -32,6 +32,13 @@ Route::middleware('auth')->group(function (): void {
 
 Route::get('/docs', fn (): \Illuminate\Contracts\View\View => view('swagger'))->name('docs');
 
+Route::get('/api-docs', function (Illuminate\Http\Request $request) {
+    $spec = json_decode(file_get_contents(public_path('swagger.json')), true);
+    $spec['servers'] = [['url' => $request->getSchemeAndHttpHost()]];
+
+    return response()->json($spec);
+})->name('api-docs');
+
 Route::get('/docs.postman', function () {
     $collection = base_path('docs/postman/bufete_abogados.postman_collection.json');
 
