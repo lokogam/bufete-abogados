@@ -19,6 +19,8 @@ class DashboardController extends Controller
             'casosArchivados' => Caso::where('estado', CasoEstado::Archivado->value)->count(),
             'totalClientes' => Cliente::count(),
             'totalAbogados' => Abogado::count(),
+            'clientesRecientes' => Cliente::query()->latest()->limit(5)->get(),
+            'abogadosRecientes' => Abogado::query()->latest()->limit(5)->get(),
         ]);
     }
 }

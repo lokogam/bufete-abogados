@@ -16,18 +16,22 @@ final class CasoService
     /**
      * Lista paginada de casos con cliente y abogados, ordenados por expediente.
      * Si se pasa una búsqueda, filtra por número de expediente, datos del cliente
-     * o etiqueta del estado.
+     * o etiqueta del estado. El parámetro "estado" permite filtrar por el valor
+     * exacto del enum (en_tramite, archivado, sentenciado, desistido, suspendido).
      *
      * @return LengthAwarePaginator<int, Caso>
      */
-    public function list(?string $search = null, int $perPage = 10): LengthAwarePaginator
+    public function list(?string $search = null, ?string $estado = null, int $perPage = 10): LengthAwarePaginator
     {
-        $estado = $search !== null ? CasoEstado::fromLabel($search) : null;
+        $estadoBuscado = $search !== null ? CasoEstado::fromLabel($search) : null;
 
         return Caso::query()
             ->with(['cliente', 'abogados'])
-            ->when($search, static function ($query, string $search) use ($estado): void {
-                $query->where(static function ($query) use ($search, $estado): void {
+            ->when($estado, static function ($query, string $estado): void {
+                $query->where('estado', $estado);
+            })
+            ->when($search, static function ($query, string $search) use ($estadoBuscado): void {
+                $query->where(static function ($query) use ($search, $estadoBuscado): void {
                     $query->where('numero_expediente', 'like', "%{$search}%")
                         ->orWhereHas('cliente', static function ($query) use ($search): void {
                             $query->where('cedula', 'like', "%{$search}%")
@@ -35,8 +39,8 @@ final class CasoService
                                 ->orWhere('apellido', 'like', "%{$search}%");
                         });
 
-                    if ($estado !== null) {
-                        $query->orWhere('estado', $estado);
+                    if ($estadoBuscado !== null) {
+                        $query->orWhere('estado', $estadoBuscado);
                     }
                 });
             })

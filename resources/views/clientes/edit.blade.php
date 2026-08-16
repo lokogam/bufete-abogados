@@ -6,8 +6,8 @@
     <a href="{{ route('clientes.show', $cliente) }}" class="back-link">← Volver al cliente</a>
 
     <div class="mt-4">
-        <h1 class="text-2xl font-bold">Editar cliente</h1>
-        <p class="mt-1 text-sm text-gray-500">{{ $cliente->nombre_completo }}</p>
+        <h1 class="font-display text-3xl font-bold tracking-tight text-ink">Editar cliente</h1>
+        <p class="mt-1 text-sm text-muted">{{ $cliente->nombre_completo }}</p>
     </div>
 
     <div class="card mt-6 max-w-2xl">

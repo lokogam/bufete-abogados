@@ -44,6 +44,20 @@ enum CasoEstado: string
     }
 
     /**
+     * Clase CSS del badge para mostrar el estado con su color.
+     */
+    public function badgeClass(): string
+    {
+        return match ($this) {
+            self::EnTramite => 'badge-amber',
+            self::Archivado => 'badge-gray',
+            self::Sentenciado => 'badge-green',
+            self::Desistido => 'badge-red',
+            self::Suspendido => 'badge-orange',
+        };
+    }
+
+    /**
      * Resuelve un estado a partir de su etiqueta, sin distinguir
      * mayúsculas, espacios ni tildes. Devuelve null si no coincide.
      */

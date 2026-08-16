@@ -37,6 +37,21 @@ class Abogado extends Model
     }
 
     /**
+     * Color hexadecimal de la especialidad para las etiquetas del listado.
+     */
+    public function getEspecialidadColorAttribute(): string
+    {
+        return match (mb_strtolower(trim((string) $this->especialidad))) {
+            'derecho civil', 'civil' => '#2563eb',
+            'derecho penal', 'penal' => '#dc2626',
+            'derecho laboral', 'laboral' => '#16a34a',
+            'derecho comercial', 'comercial' => '#9333ea',
+            'derecho familiar', 'familiar' => '#d97706',
+            default => '#6b7280',
+        };
+    }
+
+    /**
      * @return BelongsToMany<Caso, $this>
      */
     public function casos(): BelongsToMany

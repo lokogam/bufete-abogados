@@ -21,12 +21,16 @@ class CasoWebController extends Controller
 
     /**
      * Listado paginado de casos en orden ascendente por expediente,
-     * con búsqueda opcional por el parámetro "q".
+     * con búsqueda opcional por "q" y filtro por estado con "estado".
      */
     public function index(Request $request): View
     {
         return view('casos.index', [
-            'casos' => $this->service->list($request->query('q')),
+            'casos' => $this->service->list(
+                search: $request->query('q'),
+                estado: $request->query('estado'),
+            ),
+            'estados' => CasoEstado::cases(),
         ]);
     }
 

@@ -7,8 +7,8 @@
 
     <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold">{{ $cliente->nombre_completo }}</h1>
-            <p class="mt-1 text-sm text-gray-500">Cédula {{ $cliente->cedula }}</p>
+            <h1 class="font-display text-3xl font-bold tracking-tight text-ink">{{ $cliente->nombre_completo }}</h1>
+            <p class="mt-1 font-mono text-sm text-muted">Cédula {{ $cliente->cedula }}</p>
         </div>
         <div class="flex items-center gap-3">
             <a href="{{ route('clientes.edit', $cliente) }}" class="btn-secondary">Editar</a>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="detail-item">
                     <dt>Cédula</dt>
-                    <dd>{{ $cliente->cedula }}</dd>
+                    <dd class="font-mono">{{ $cliente->cedula }}</dd>
                 </div>
                 <div class="detail-item">
                     <dt>Email</dt>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="detail-item">
                     <dt>Teléfono</dt>
-                    <dd>{{ $cliente->telefono ?? '—' }}</dd>
+                    <dd class="font-mono">{{ $cliente->telefono ?? '—' }}</dd>
                 </div>
                 <div class="detail-item">
                     <dt>Dirección</dt>
@@ -54,14 +54,14 @@
                 <a href="{{ route('casos.create') }}" class="link-action">Nuevo caso</a>
             </div>
             @forelse ($cliente->casos as $caso)
-                <div class="flex items-center justify-between border-b border-gray-100 py-3 last:border-0">
+                <div class="flex items-center justify-between border-b border-line/60 py-3 last:border-0">
                     <div>
-                        <a href="{{ route('casos.show', $caso) }}" class="font-medium text-primary-600 hover:underline">
+                        <a href="{{ route('casos.show', $caso) }}" class="font-mono text-sm font-medium text-link hover:underline">
                             {{ $caso->numero_expediente }}
                         </a>
-                        <p class="mt-0.5 text-xs text-gray-500">{{ $caso->descripcion }}</p>
+                        <p class="mt-0.5 text-xs text-muted">{{ $caso->descripcion }}</p>
                     </div>
-                    <span class="badge-blue">{{ $caso->estado->label() }}</span>
+                    <span class="badge {{ $caso->estado->badgeClass() }}">{{ $caso->estado->label() }}</span>
                 </div>
             @empty
                 <p class="empty-state py-8">El cliente aún no tiene casos registrados.</p>

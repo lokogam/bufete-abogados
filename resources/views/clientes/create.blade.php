@@ -6,8 +6,8 @@
     <a href="{{ route('clientes.index') }}" class="back-link">← Volver a clientes</a>
 
     <div class="mt-4">
-        <h1 class="text-2xl font-bold">Nuevo cliente</h1>
-        <p class="mt-1 text-sm text-gray-500">Registra un nuevo cliente del bufete.</p>
+        <h1 class="font-display text-3xl font-bold tracking-tight text-ink">Nuevo cliente</h1>
+        <p class="mt-1 text-sm text-muted">Registra un nuevo cliente del bufete.</p>
     </div>
 
     <div class="card mt-6 max-w-2xl">

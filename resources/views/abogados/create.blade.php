@@ -6,8 +6,8 @@
     <a href="{{ route('abogados.index') }}" class="back-link">← Volver a abogados</a>
 
     <div class="mt-4">
-        <h1 class="text-2xl font-bold">Nuevo abogado</h1>
-        <p class="mt-1 text-sm text-gray-500">Registra un nuevo abogado del bufete.</p>
+        <h1 class="font-display text-3xl font-bold tracking-tight text-ink">Nuevo abogado</h1>
+        <p class="mt-1 text-sm text-muted">Registra un nuevo abogado del bufete.</p>
     </div>
 
     <div class="card mt-6 max-w-2xl">

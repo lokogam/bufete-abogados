@@ -149,4 +149,18 @@ class CasoCrudTest extends TestCase
             ->assertSee($archivado->numero_expediente)
             ->assertDontSee($tramite->numero_expediente);
     }
+
+    public function test_filtra_casos_por_estado_con_chips(): void
+    {
+        $this->auth();
+        $archivado = Caso::factory()->archivado()->create();
+        $suspendido = Caso::factory()->create(['estado' => CasoEstado::Suspendido->value]);
+        $tramite = Caso::factory()->create();
+
+        $this->get('/casos?estado=archivado')
+            ->assertOk()
+            ->assertSee($archivado->numero_expediente)
+            ->assertDontSee($suspendido->numero_expediente)
+            ->assertDontSee($tramite->numero_expediente);
+    }
 }
